@@ -1,24 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { NotificationContainer } from 'react-notifications';
+import Auth from './components/Auth';
+import { useSelector } from 'react-redux';
+import UserPage from './components/UserPage';
+import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import Profile from './components/Profile';
+import FAQ from './components/FAQ';
 
 function App() {
+  const { loggedIn } = useSelector(state => state.user)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={loggedIn ? <UserPage /> : <Auth />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/faq" element={<FAQ/>}/>
+        </Routes>
+        <NotificationContainer />
+      </div>
+    </BrowserRouter>
   );
 }
 
